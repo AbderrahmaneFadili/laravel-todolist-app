@@ -10,6 +10,7 @@
 
 <body style="text-align: center">
     <h1>Create Your Todo</h1>
+    <x-alert />
     <form action="/create" method="post">
         @csrf
         <input type="text" name='title' id='title' />

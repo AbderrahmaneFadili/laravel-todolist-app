@@ -9,7 +9,11 @@ class TodoController extends Controller
 {
     public function index()
     {
-        return view('todo.index');
+        $todos = Todo::orderBy('completed')->get();
+
+        return view('todo.index', [
+            "todos" => $todos,
+        ]);
     }
 
     public function create()
@@ -21,7 +25,7 @@ class TodoController extends Controller
     {
         //validate
         $this->validate($request, [
-            'title' => 'required'
+            'title' => 'required|max:255'
         ]);
 
         //store todo in database
@@ -32,8 +36,31 @@ class TodoController extends Controller
         return  back()->with('success', 'todod created successfuly!');
     }
 
-    public function edit()
+
+    public function update(Request $request)
     {
-        return view('todo.edit');
+        //validate
+        $this->validate($request, [
+            'title' => 'required|max:255'
+        ]);
+
+        $todo = Todo::find($request->id);
+
+        //store todo in database
+        $todo->update([
+            'title' => $request->title
+        ]);
+
+        return  redirect()->back()->with('success', 'todo updated successfuly!');
+    }
+
+    public function edit($id)
+    {
+        $todo = Todo::find($id);
+
+        return view('todo.edit', [
+            'todo' => $todo,
+            'id' => $id
+        ]);
     }
 }
