@@ -23,3 +23,4 @@ Route::get('/create', [TodoController::class, 'create']);
 Route::post('/create', [TodoController::class, 'store']);
 Route::get('/{id}/edit', [TodoController::class, 'edit']);
 Route::post('/update', [TodoController::class, 'update']);
+Route::get('/{id}/completed', [TodoController::class, 'completed']);

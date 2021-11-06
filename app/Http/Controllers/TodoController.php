@@ -63,4 +63,17 @@ class TodoController extends Controller
             'id' => $id
         ]);
     }
+
+    public function completed($id)
+    {
+        $todo = Todo::find($id);
+
+        if ($todo->completed) {
+            $todo->update(['completed' => false]);
+            return redirect()->back()->with('success', 'todo incompleted!');
+        } else {
+            $todo->update(['completed' => true]);
+            return redirect()->back()->with('success', 'todo completed!');
+        }
+    }
 }
